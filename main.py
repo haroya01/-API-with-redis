@@ -39,6 +39,7 @@ app = Flask(__name__)
 def index():
     return "flask서버 작동중"
 
+# 특정 종목 호출
 @app.route('/redis/<string:stock_name>', methods=['GET'])
 def get_stock_info_by_name(stock_name):
     # Redis에서 주식 이름에 해당하는 정보를 가져옴
@@ -51,7 +52,7 @@ def get_stock_info_by_name(stock_name):
     # JSON 형식으로 반환
     return jsonify(json.loads(value))
 
-# 이걸로 stock엔티티에 값집어넣기 
+# 원하는 정보 호출
 @app.route('/redis', methods=['GET'])
 def get_stock_info():
 
@@ -81,7 +82,7 @@ def run_server():
 def run_redis():
     print("redis 작업 시작")
 
-    # 5분마다 한번씩 함수 실행, 테스트를 위해 30초마다 한번씩 함수 실행
+    # 30초마다 한번씩 함수 실행
     schedule.every(30).seconds.do(job_wrapper)
 
     while True:
